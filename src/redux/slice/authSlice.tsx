@@ -1,7 +1,5 @@
 import { PayloadAction, createSlice } from "@reduxjs/toolkit";
 import { RootState } from "@/redux/store";
-import { useDispatch } from "react-redux";
-import { INITIALIZE_NFT_STATE } from "./nftSlice";
 
 interface IAuthState {
   isLoggedIn: boolean;

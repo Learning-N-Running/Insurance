@@ -49,7 +49,6 @@ export const Web3AuthProvider = ({ children }: { children: any }) => {
       primaryButton: "socialLogin", // "externalLogin" | "socialLogin" | "emailLogin"
       modalZIndex: "99998",
     },
-    privateKeyProvider: privateKeyProvider,
   };
   const web3auth_ = new Web3Auth(Web3AuthOptions);
 
