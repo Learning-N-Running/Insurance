@@ -7,26 +7,32 @@ import {
   WEB3AUTH_NETWORK,
 } from "@web3auth/base";
 import { Web3Auth, Web3AuthOptions } from "@web3auth/modal";
-import { EthereumPrivateKeyProvider } from "@web3auth/ethereum-provider";
 
-const Web3AuthContext = createContext<Web3Auth | null>(null);
-
-const chainConfig = {
-  chainNamespace: CHAIN_NAMESPACES.EIP155,
-  chainId: "0x13882",
-  rpcTarget: "https://polygon-amoy.drpc.org",
-  displayName: "Polygon Amoy Testnet",
-  blockExplorer: "https://amoy.polygonscan.com/",
-  ticker: "MATIC",
-  tickerName: "Polygon",
+type Web3AuthContextType = {
+  web3auth: Web3Auth | null;
+  privateKey: string | null;
+  setPrivateKey: (key: string | null) => void;
 };
 
-const privateKeyProvider = new EthereumPrivateKeyProvider({
-  config: { chainConfig },
-});
+const Web3AuthContext = createContext<Web3AuthContextType | null>(null);
+
+// const chainConfig = {
+//   chainNamespace: CHAIN_NAMESPACES.EIP155,
+//   chainId: "0x13881",
+//   rpcTarget: "https://rpc.ankr.com/polygon_mumbai",
+//   displayName: "Polygon Mumbai Testnet",
+//   blockExplorer: "https://amoy.polygonscan.com/",
+//   ticker: "MATIC",
+//   tickerName: "Polygon",
+// };
+
+// const privateKeyProvider = new EthereumPrivateKeyProvider({
+//   config: { chainConfig },
+// });
 
 export const Web3AuthProvider = ({ children }: { children: any }) => {
   const [web3auth, setWeb3auth] = useState<Web3Auth | null>(null);
+  const [privateKey, setPrivateKey] = useState<string | null>(null);
 
   const Web3AuthOptions: Web3AuthOptions = {
     clientId: process.env.NEXT_PUBLIC_WEB3_AUTH_CLIENT_ID!, // Get your Client ID from the Web3Auth Dashboard
@@ -35,8 +41,8 @@ export const Web3AuthProvider = ({ children }: { children: any }) => {
       chainNamespace: CHAIN_NAMESPACES.EIP155,
       chainId: "0x13882",
       // rpcTarget: process.env.NEXT_PUBLIC_RPC_URL,
-      rpcTarget: "https://polygon-amoy.drpc.org",
-      displayName: "Polygon Amoy Testnet",
+      rpcTarget: "https://rpc-amoy.polygon.technology/",
+      displayName: "Polygon Amoy",
     },
     uiConfig: {
       appName: "Rebirth Club",
@@ -57,7 +63,7 @@ export const Web3AuthProvider = ({ children }: { children: any }) => {
   }, []);
 
   return (
-    <Web3AuthContext.Provider value={web3auth}>
+    <Web3AuthContext.Provider value={{ web3auth, privateKey, setPrivateKey }}>
       {children}
     </Web3AuthContext.Provider>
   );

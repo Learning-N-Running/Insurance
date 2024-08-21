@@ -15,7 +15,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
     if (
       pathname === "/" ||
       pathname === "/my-collection" ||
-      pathname === "/chat" ||
+      pathname === "/conversation" ||
       pathname === "/not-pc-error"
     ) {
       return false;

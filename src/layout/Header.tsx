@@ -28,7 +28,7 @@ const Header = () => {
       <div style={{ display: "flex", alignItems: "center" }}>
         <WhiteButton
           onClick={() => {
-            router.push(`/chat`);
+            router.push(`/conversation`);
           }}
         >
           채팅

@@ -5,9 +5,51 @@ import SlideBanner from "@/components/banner/SlideBanner";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import styled from "styled-components";
+import { useWeb3Auth } from "@/contexts/Web3AuthContext";
+import { useSetClient } from "@/lib/hooks/useClient";
+import { useEffect } from "react";
+import Web3 from "web3";
+import { AlchemyProvider, ethers } from "ethers";
+import { Client } from "@xmtp/xmtp-js";
 
 export default function Home() {
   const router = useRouter();
+
+  const web3auth = useWeb3Auth();
+  const setClient = useSetClient();
+
+  async function setClientForChat() {
+    try {
+      const web3authProvider = await web3auth!.web3auth!.connect();
+      const web3 = new Web3(web3authProvider!);
+      const provider = new AlchemyProvider(
+        "matic-amoy",
+        process.env.NEXT_PUBLIC_ALCHEMY_API_KEY
+      );
+
+      const privateKey = await web3authProvider!.request({
+        method: "private_key",
+      });
+      console.log(privateKey);
+
+      const signer = new ethers.Wallet(privateKey as string, provider);
+
+      const client = await Client.create(signer, {
+        env: "dev",
+      });
+      setClient(client);
+      console.log(client);
+    } catch (error) {
+      console.error("Error setting up client:", error);
+    }
+  }
+
+  useEffect(() => {
+    if (web3auth) {
+      setClientForChat();
+    }
+  }, [web3auth]);
+
   return (
     <>
       <SlideBanner>

@@ -4,7 +4,12 @@ import "./globals.css";
 import Layout from "@/layout/Layout";
 import GlobalStyle from "@/styles/global";
 import Providers from "@/redux/provider";
-import { Web3AuthProvider } from "@/context/Web3AuthContext";
+import { Web3AuthProvider } from "@/contexts/Web3AuthContext";
+import ClientProvider from "@/contexts/ClientContext";
+import "../../polyfills";
+
+// // Register the "en" locale.
+// TimeAgo.addDefaultLocale(en);
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,7 +29,9 @@ export default function RootLayout({
         <GlobalStyle />
         <Providers>
           <Web3AuthProvider>
-            <Layout>{children}</Layout>
+            <ClientProvider>
+              <Layout>{children}</Layout>
+            </ClientProvider>
           </Web3AuthProvider>
         </Providers>
       </body>

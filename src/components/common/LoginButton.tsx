@@ -10,8 +10,9 @@ import Web3, { Contract } from "web3";
 import { useDispatch } from "react-redux";
 import { SET_USER_LOGIN } from "@/redux/slice/authSlice";
 import { AlchemyProvider, ethers } from "ethers";
-import { useWeb3Auth } from "@/context/Web3AuthContext";
+import { useWeb3Auth } from "@/contexts/Web3AuthContext";
 import { styled } from "styled-components";
+import { useSetClient } from "@/lib/hooks/useClient";
 
 const LoginButton = () => {
   const dispatch = useDispatch();
@@ -20,7 +21,7 @@ const LoginButton = () => {
 
   useEffect(() => {
     async function initialize() {
-      await web3auth!.initModal();
+      await web3auth!.web3auth!.initModal();
     }
     initialize();
   }, []);
@@ -47,27 +48,26 @@ const LoginButton = () => {
   return (
     <GreenButton
       onClick={async () => {
-        const web3authProvider = await web3auth!.connect();
+        const web3authProvider = await web3auth!.web3auth!.connect();
         const web3 = new Web3(web3authProvider!);
 
         const provider = new AlchemyProvider(
-          "maticmum",
+          "matic-amoy",
           process.env.NEXT_PUBLIC_ALCHEMY_API_KEY
         );
 
-        const userInfo = await web3auth!.getUserInfo();
+        const userInfo = await web3auth!.web3auth!.getUserInfo();
         console.log(userInfo);
 
         const address = (await web3!.eth.getAccounts())[0];
         console.log(address);
 
-        const privateKey = await web3auth!.provider!.request({
+        const privateKey = await web3auth!.web3auth!.provider!.request({
           method: "private_key",
         });
 
-        if (typeof privateKey === "string") {
-          const signer = new ethers.Wallet(privateKey, provider);
-        }
+        web3auth!.setPrivateKey(privateKey as string);
+
         dispatch(
           SET_USER_LOGIN({
             address: address,
