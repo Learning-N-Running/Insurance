@@ -30,25 +30,33 @@ export default function ConversationListView(): ReactElement {
     <div>
       <button
         onClick={() => setReadReceiptsEnabled(!readReceiptsEnabled)}
-        className="bg-blue-100 p-1 my-2 text-xs"
         id={`read-receipt-${readReceiptsEnabled}`}
+        style={{ fontSize: "15px" }}
       >
         {readReceiptsEnabled ? "Disable read receipts" : "Enable read receipts"}
       </button>
-      {conversations?.length == 0 && <p>No conversations yet.</p>}
-      {conversations
-        ? conversations.map((conversation, i) => (
-            <Link
-              href={`/conversation/${conversation.topic}`}
-              key={conversation.topic}
-            >
-              <ConversationCellView
-                conversation={conversation}
-                latestMessage={latestMessages[i]}
-              />
-            </Link>
-          ))
-        : "Could not load conversations"}
+      <div
+        style={{
+          padding: "10px",
+          border: "2px solid gray",
+          margin: "10px 0 0 0 ",
+        }}
+      >
+        {conversations?.length == 0 && <p>No conversations yet.</p>}
+        {conversations
+          ? conversations.map((conversation, i) => (
+              <Link
+                href={`/conversation/${conversation.topic}`}
+                key={conversation.topic}
+              >
+                <ConversationCellView
+                  conversation={conversation}
+                  latestMessage={latestMessages[i]}
+                />
+              </Link>
+            ))
+          : "Could not load conversations"}
+      </div>
     </div>
   );
 }

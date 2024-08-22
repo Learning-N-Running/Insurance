@@ -23,8 +23,7 @@ export default function Conservation() {
 
   return (
     <>
-      <Container>안녕하세요</Container>
-      {client ? <HomeView /> : <p>로그인 하세유</p>}
+      <Container>{client ? <HomeView /> : <p>로그인 하세유</p>}</Container>
     </>
   );
 }

@@ -16,20 +16,6 @@ type Web3AuthContextType = {
 
 const Web3AuthContext = createContext<Web3AuthContextType | null>(null);
 
-// const chainConfig = {
-//   chainNamespace: CHAIN_NAMESPACES.EIP155,
-//   chainId: "0x13881",
-//   rpcTarget: "https://rpc.ankr.com/polygon_mumbai",
-//   displayName: "Polygon Mumbai Testnet",
-//   blockExplorer: "https://amoy.polygonscan.com/",
-//   ticker: "MATIC",
-//   tickerName: "Polygon",
-// };
-
-// const privateKeyProvider = new EthereumPrivateKeyProvider({
-//   config: { chainConfig },
-// });
-
 export const Web3AuthProvider = ({ children }: { children: any }) => {
   const [web3auth, setWeb3auth] = useState<Web3Auth | null>(null);
   const [privateKey, setPrivateKey] = useState<string | null>(null);
@@ -40,7 +26,6 @@ export const Web3AuthProvider = ({ children }: { children: any }) => {
     chainConfig: {
       chainNamespace: CHAIN_NAMESPACES.EIP155,
       chainId: "0x13882",
-      // rpcTarget: process.env.NEXT_PUBLIC_RPC_URL,
       rpcTarget: "https://rpc-amoy.polygon.technology/",
       displayName: "Polygon Amoy",
     },
@@ -48,8 +33,8 @@ export const Web3AuthProvider = ({ children }: { children: any }) => {
       appName: "Rebirth Club",
       mode: "auto", // light, dark or auto
       loginMethodsOrder: ["google", "github", "twitter", "kakao"],
-      logoLight: "https://web3auth.io/images/web3auth-logo.svg",
-      logoDark: "https://web3auth.io/images/web3auth-logo---Dark.svg",
+      logoLight: "https://web3auth.io/images/web3authlog.png", //로고 사진
+      logoDark: "https://web3auth.io/images/web3authlog.png",
       defaultLanguage: "en", // en, de, ja, ko, zh, es, fr, pt, nl
       loginGridCol: 3,
       primaryButton: "socialLogin", // "externalLogin" | "socialLogin" | "emailLogin"

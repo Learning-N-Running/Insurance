@@ -12,16 +12,22 @@ export default function ConversationCellView({
   latestMessage: Message | undefined;
 }): ReactElement {
   return (
-    <div className="mt-2 p-2 border dark:border-zinc-600 rounded">
-      <div className="flex items-center justify-between space-x-2">
-        <div className="hover:underline">
-          <span className="text-blue-700 dark:text-blue-500">
+    <div
+      style={{
+        padding: "10px 0",
+        margin: "5px 0",
+        border: "1px solid black",
+        borderRadius: "5px",
+        cursor: "hover",
+      }}
+    >
+      <div>
+        <div>
+          <span>
             {conversation.title || shortAddress(conversation.peerAddress)}
           </span>{" "}
         </div>
-        <div className="text-xs text-zinc-500">
-          {conversation.updatedAt.toString()}
-        </div>
+        <div>{conversation.updatedAt.toString()}</div>
       </div>
       {latestMessage ? (
         <div className="block text-zinc-500">

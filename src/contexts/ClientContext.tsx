@@ -43,10 +43,10 @@ export default function ClientProvider({
           method: "private_key",
         });
 
-        if (!privateKey) {
-          setIsLoading(false);
-          return;
-        }
+        // if (!privateKey) {
+        //   setIsLoading(false);
+        //   return;
+        // }
 
         const wallet = new Wallet(privateKey as string);
         const client = await Client.create(wallet, {

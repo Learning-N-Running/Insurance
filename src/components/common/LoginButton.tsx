@@ -13,11 +13,12 @@ import { AlchemyProvider, ethers } from "ethers";
 import { useWeb3Auth } from "@/contexts/Web3AuthContext";
 import { styled } from "styled-components";
 import { useSetClient } from "@/lib/hooks/useClient";
+import { Client } from "@xmtp/xmtp-js";
 
 const LoginButton = () => {
   const dispatch = useDispatch();
-
   const web3auth = useWeb3Auth();
+  const setClient = useSetClient();
 
   useEffect(() => {
     async function initialize() {
@@ -26,25 +27,6 @@ const LoginButton = () => {
     initialize();
   }, []);
 
-  // subscribe to lifecycle events emitted by web3auth
-  const subscribeAuthEvents = (web3auth: Web3Auth) => {
-    web3auth.on(ADAPTER_EVENTS.CONNECTED, (data: CONNECTED_EVENT_DATA) => {
-      console.log("connected to wallet", data);
-      // web3auth.provider will be available here after user is connected
-    });
-    web3auth.on(ADAPTER_EVENTS.CONNECTING, () => {
-      console.log("connecting");
-    });
-    web3auth.on(ADAPTER_EVENTS.DISCONNECTED, () => {
-      console.log("disconnected");
-    });
-    web3auth.on(ADAPTER_EVENTS.ERRORED, (error) => {
-      console.log("error", error);
-    });
-    web3auth.on(ADAPTER_EVENTS.ERRORED, (error) => {
-      console.log("error", error);
-    });
-  };
   return (
     <GreenButton
       onClick={async () => {
@@ -66,7 +48,11 @@ const LoginButton = () => {
           method: "private_key",
         });
 
-        web3auth!.setPrivateKey(privateKey as string);
+        const signer = new ethers.Wallet(privateKey as string, provider);
+        const client = await Client.create(signer, {
+          env: "dev",
+        });
+        setClient(client);
 
         dispatch(
           SET_USER_LOGIN({
