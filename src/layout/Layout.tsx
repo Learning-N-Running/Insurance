@@ -15,7 +15,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
     if (
       pathname === "/" ||
       pathname === "/my-collection" ||
-      pathname === "/chat" ||
+      pathname === "/conversation" ||
       pathname === "/not-pc-error"
     ) {
       return false;
@@ -28,15 +28,6 @@ const Layout = ({ children }: { children: ReactNode }) => {
       return false;
     }
     return true;
-  };
-
-  const handleGoBack = () => {
-    const pathnameParts = pathname.split("/");
-    if (pathnameParts.length === 2) {
-      return "/";
-    }
-    const newPathname = pathnameParts.slice(0, -1).join("/");
-    return newPathname;
   };
 
   // useEffect //
@@ -61,18 +52,8 @@ const Layout = ({ children }: { children: ReactNode }) => {
 
   return (
     <>
-      {showHeader() && <Header />}
-
       <BodyContainer>
-        {showGoBack() && (
-          <GoBack
-            width={32}
-            height={32}
-            alt="go back"
-            src="/images/leftArrow.svg"
-            onClick={() => router.push(handleGoBack())}
-          />
-        )}
+        {/* {showHeader() && <Header />} */}
 
         {children}
       </BodyContainer>
@@ -81,10 +62,18 @@ const Layout = ({ children }: { children: ReactNode }) => {
 };
 
 const BodyContainer = styled.div`
-  width: 100vw;
+  width: 768px;
   height: 100%;
 
-  padding-top: 84px;
+  position: fixed;
+  left: 50%;
+  transform: translateX(-50%);
+
+  background-color: white;
+  box-shadow: -10px 0 15px -10px rgba(0, 0, 0, 0.2),
+    10px 0 15px -10px rgba(0, 0, 0, 0.2);
+
+  /* padding-top: 84px; */
 
   overflow: auto;
 `;

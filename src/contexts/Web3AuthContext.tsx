@@ -7,23 +7,12 @@ import {
   WEB3AUTH_NETWORK,
 } from "@web3auth/base";
 import { Web3Auth, Web3AuthOptions } from "@web3auth/modal";
-import { EthereumPrivateKeyProvider } from "@web3auth/ethereum-provider";
 
-const Web3AuthContext = createContext<Web3Auth | null>(null);
-
-const chainConfig = {
-  chainNamespace: CHAIN_NAMESPACES.EIP155,
-  chainId: "0x13882",
-  rpcTarget: "https://polygon-amoy.drpc.org",
-  displayName: "Polygon Amoy Testnet",
-  blockExplorer: "https://amoy.polygonscan.com/",
-  ticker: "MATIC",
-  tickerName: "Polygon",
+type Web3AuthContextType = {
+  web3auth: Web3Auth | null;
 };
 
-const privateKeyProvider = new EthereumPrivateKeyProvider({
-  config: { chainConfig },
-});
+const Web3AuthContext = createContext<Web3AuthContextType | null>(null);
 
 export const Web3AuthProvider = ({ children }: { children: any }) => {
   const [web3auth, setWeb3auth] = useState<Web3Auth | null>(null);
@@ -34,16 +23,15 @@ export const Web3AuthProvider = ({ children }: { children: any }) => {
     chainConfig: {
       chainNamespace: CHAIN_NAMESPACES.EIP155,
       chainId: "0x13882",
-      // rpcTarget: process.env.NEXT_PUBLIC_RPC_URL,
-      rpcTarget: "https://polygon-amoy.drpc.org",
-      displayName: "Polygon Amoy Testnet",
+      rpcTarget: "https://rpc-amoy.polygon.technology/",
+      displayName: "Polygon Amoy",
     },
     uiConfig: {
       appName: "Rebirth Club",
       mode: "auto", // light, dark or auto
       loginMethodsOrder: ["google", "github", "twitter", "kakao"],
-      logoLight: "https://web3auth.io/images/web3auth-logo.svg",
-      logoDark: "https://web3auth.io/images/web3auth-logo---Dark.svg",
+      logoLight: "https://web3auth.io/images/web3authlog.png", //로고 사진
+      logoDark: "https://web3auth.io/images/web3authlog.png",
       defaultLanguage: "en", // en, de, ja, ko, zh, es, fr, pt, nl
       loginGridCol: 3,
       primaryButton: "socialLogin", // "externalLogin" | "socialLogin" | "emailLogin"
@@ -57,7 +45,7 @@ export const Web3AuthProvider = ({ children }: { children: any }) => {
   }, []);
 
   return (
-    <Web3AuthContext.Provider value={web3auth}>
+    <Web3AuthContext.Provider value={{ web3auth }}>
       {children}
     </Web3AuthContext.Provider>
   );

@@ -5,9 +5,17 @@ import SlideBanner from "@/components/banner/SlideBanner";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 import styled from "styled-components";
+import { useWeb3Auth } from "@/contexts/Web3AuthContext";
+import { useSetClient } from "@/lib/hooks/useClient";
+import { useEffect } from "react";
+import Web3 from "web3";
+import { AlchemyProvider, ethers } from "ethers";
+import { Client } from "@xmtp/xmtp-js";
 
 export default function Home() {
   const router = useRouter();
+  const web3auth = useWeb3Auth();
+
   return (
     <>
       <SlideBanner>

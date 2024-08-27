@@ -18,11 +18,18 @@ const nextConfig = {
         port: "",
         pathname: "/**",
       },
+      {
+        protocol: "https",
+        hostname: "avatars.githubusercontent.com",
+        port: "",
+        pathname: "/**",
+      },
     ],
   },
   env: {
     NEXT_PUBLIC_WEB3_AUTH_CLIENT_ID: process.env.WEB3_AUTH_CLIENT_ID,
     NEXT_PUBLIC_ALCHEMY_API_KEY: process.env.ALCHEMY_API_KEY,
+    NEXT_PUBLIC_ALCHEMY_RPC_URL: process.env.ALCHEMY_RPC_URL,
     NEXT_PUBLIC_PRIVATE_KEY: process.env.PRIVATE_KEY,
   },
 };

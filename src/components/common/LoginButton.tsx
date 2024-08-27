@@ -10,64 +10,44 @@ import Web3, { Contract } from "web3";
 import { useDispatch } from "react-redux";
 import { SET_USER_LOGIN } from "@/redux/slice/authSlice";
 import { AlchemyProvider, ethers } from "ethers";
-import { useWeb3Auth } from "@/context/Web3AuthContext";
+import { useWeb3Auth } from "@/contexts/Web3AuthContext";
 import { styled } from "styled-components";
+import { useSetClient } from "@/lib/hooks/useClient";
+import { Client } from "@xmtp/xmtp-js";
 
 const LoginButton = () => {
   const dispatch = useDispatch();
-
   const web3auth = useWeb3Auth();
+  const setClient = useSetClient();
 
   useEffect(() => {
     async function initialize() {
-      await web3auth!.initModal();
+      await web3auth!.web3auth!.initModal();
     }
     initialize();
   }, []);
 
-  // subscribe to lifecycle events emitted by web3auth
-  const subscribeAuthEvents = (web3auth: Web3Auth) => {
-    web3auth.on(ADAPTER_EVENTS.CONNECTED, (data: CONNECTED_EVENT_DATA) => {
-      console.log("connected to wallet", data);
-      // web3auth.provider will be available here after user is connected
-    });
-    web3auth.on(ADAPTER_EVENTS.CONNECTING, () => {
-      console.log("connecting");
-    });
-    web3auth.on(ADAPTER_EVENTS.DISCONNECTED, () => {
-      console.log("disconnected");
-    });
-    web3auth.on(ADAPTER_EVENTS.ERRORED, (error) => {
-      console.log("error", error);
-    });
-    web3auth.on(ADAPTER_EVENTS.ERRORED, (error) => {
-      console.log("error", error);
-    });
-  };
   return (
     <GreenButton
       onClick={async () => {
-        const web3authProvider = await web3auth!.connect();
+        const web3authProvider = await web3auth!.web3auth!.connect();
         const web3 = new Web3(web3authProvider!);
 
-        const provider = new AlchemyProvider(
-          "maticmum",
-          process.env.NEXT_PUBLIC_ALCHEMY_API_KEY
-        );
+        const ethersProvider = new ethers.BrowserProvider(web3authProvider!);
 
-        const userInfo = await web3auth!.getUserInfo();
+        const userInfo = await web3auth!.web3auth!.getUserInfo();
         console.log(userInfo);
 
         const address = (await web3!.eth.getAccounts())[0];
         console.log(address);
 
-        const privateKey = await web3auth!.provider!.request({
-          method: "private_key",
-        });
+        const signer = await ethersProvider.getSigner();
 
-        if (typeof privateKey === "string") {
-          const signer = new ethers.Wallet(privateKey, provider);
-        }
+        const client = await Client.create(signer, {
+          env: "dev",
+        });
+        setClient(client);
+
         dispatch(
           SET_USER_LOGIN({
             address: address,
