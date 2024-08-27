@@ -33,10 +33,7 @@ const LoginButton = () => {
         const web3authProvider = await web3auth!.web3auth!.connect();
         const web3 = new Web3(web3authProvider!);
 
-        const provider = new AlchemyProvider(
-          "matic-amoy",
-          process.env.NEXT_PUBLIC_ALCHEMY_API_KEY
-        );
+        const ethersProvider = new ethers.BrowserProvider(web3authProvider!);
 
         const userInfo = await web3auth!.web3auth!.getUserInfo();
         console.log(userInfo);
@@ -44,11 +41,8 @@ const LoginButton = () => {
         const address = (await web3!.eth.getAccounts())[0];
         console.log(address);
 
-        const privateKey = await web3auth!.web3auth!.provider!.request({
-          method: "private_key",
-        });
+        const signer = await ethersProvider.getSigner();
 
-        const signer = new ethers.Wallet(privateKey as string, provider);
         const client = await Client.create(signer, {
           env: "dev",
         });

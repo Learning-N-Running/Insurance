@@ -10,15 +10,12 @@ import { Web3Auth, Web3AuthOptions } from "@web3auth/modal";
 
 type Web3AuthContextType = {
   web3auth: Web3Auth | null;
-  privateKey: string | null;
-  setPrivateKey: (key: string | null) => void;
 };
 
 const Web3AuthContext = createContext<Web3AuthContextType | null>(null);
 
 export const Web3AuthProvider = ({ children }: { children: any }) => {
   const [web3auth, setWeb3auth] = useState<Web3Auth | null>(null);
-  const [privateKey, setPrivateKey] = useState<string | null>(null);
 
   const Web3AuthOptions: Web3AuthOptions = {
     clientId: process.env.NEXT_PUBLIC_WEB3_AUTH_CLIENT_ID!, // Get your Client ID from the Web3Auth Dashboard
@@ -48,7 +45,7 @@ export const Web3AuthProvider = ({ children }: { children: any }) => {
   }, []);
 
   return (
-    <Web3AuthContext.Provider value={{ web3auth, privateKey, setPrivateKey }}>
+    <Web3AuthContext.Provider value={{ web3auth }}>
       {children}
     </Web3AuthContext.Provider>
   );

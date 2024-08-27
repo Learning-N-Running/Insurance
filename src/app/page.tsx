@@ -14,7 +14,6 @@ import { Client } from "@xmtp/xmtp-js";
 
 export default function Home() {
   const router = useRouter();
-
   const web3auth = useWeb3Auth();
 
   return (

@@ -37,18 +37,7 @@ export default function ClientProvider({
     (async () => {
       setIsLoading(false);
       if (web3auth?.web3auth) {
-        const web3authProvider = await web3auth!.web3auth!.connect();
-        const web3 = new Web3(web3authProvider!);
-        const privateKey = await web3auth!.web3auth!.provider!.request({
-          method: "private_key",
-        });
-
-        // if (!privateKey) {
-        //   setIsLoading(false);
-        //   return;
-        // }
-
-        const wallet = new Wallet(privateKey as string);
+        const wallet = Wallet.createRandom();
         const client = await Client.create(wallet, {
           env: "dev",
         });
