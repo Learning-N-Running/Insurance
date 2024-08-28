@@ -2,6 +2,7 @@ import {
   ADAPTER_EVENTS,
   CHAIN_NAMESPACES,
   CONNECTED_EVENT_DATA,
+  WALLET_ADAPTERS,
   WEB3AUTH_NETWORK,
 } from "@web3auth/base";
 import { Web3Auth, Web3AuthOptions } from "@web3auth/modal";
@@ -14,21 +15,43 @@ import { useWeb3Auth } from "@/contexts/Web3AuthContext";
 import { styled } from "styled-components";
 import { useSetClient } from "@/lib/hooks/useClient";
 import { Client } from "@xmtp/xmtp-js";
+import colors from "@/styles/color";
+import { LongBlueButton } from "../base/LongBlueButton";
+import { useRouter } from "next/navigation";
+import { WALLET_ADAPTER_TYPE } from "@web3auth/base";
 
 const LoginButton = () => {
   const dispatch = useDispatch();
   const web3auth = useWeb3Auth();
   const setClient = useSetClient();
+  const router = useRouter();
 
   useEffect(() => {
     async function initialize() {
-      await web3auth!.web3auth!.initModal();
+      await web3auth!.web3auth!.initModal({
+        modalConfig: {
+          // Disable Wallet Connect V2
+          [WALLET_ADAPTERS.WALLET_CONNECT_V2]: {
+            label: "wallet_connect",
+            showOnModal: false,
+          },
+          // // Disable Metamask
+          [WALLET_ADAPTERS.METAMASK]: {
+            label: "metamask",
+            showOnModal: false,
+          },
+          [WALLET_ADAPTERS.TORUS_EVM]: {
+            label: "torus",
+            showOnModal: false,
+          },
+        },
+      });
     }
     initialize();
   }, []);
 
   return (
-    <GreenButton
+    <LongBlueButton
       onClick={async () => {
         const web3authProvider = await web3auth!.web3auth!.connect();
         const web3 = new Web3(web3authProvider!);
@@ -56,32 +79,12 @@ const LoginButton = () => {
             profileImage: userInfo.profileImage!,
           })
         );
+        router.push("/signup");
       }}
-      style={{ marginLeft: "28px" }}
     >
-      로그인
-    </GreenButton>
+      Create Your Account
+    </LongBlueButton>
   );
 };
 
 export default LoginButton;
-
-const GreenButton = styled.button`
-  height: 48px;
-  padding: 0 22px 0 22px;
-
-  background-color: #b2e898;
-  color: #108168;
-
-  font-weight: 700;
-  font-size: 18px;
-  font-family: Pretendard;
-
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #94d382;
-  }
-`;

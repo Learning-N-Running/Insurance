@@ -14,8 +14,8 @@ import "../../polyfills";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Insurance",
-  description: "Safe Insurance",
+  title: "Vroombuddy",
+  description: "Safe Car Insurance",
 };
 
 export default function RootLayout({

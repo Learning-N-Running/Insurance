@@ -27,9 +27,9 @@ export const Web3AuthProvider = ({ children }: { children: any }) => {
       displayName: "Polygon Amoy",
     },
     uiConfig: {
-      appName: "Rebirth Club",
+      appName: "Vroombuddy",
       mode: "auto", // light, dark or auto
-      loginMethodsOrder: ["google", "github", "twitter", "kakao"],
+      loginMethodsOrder: ["google", "facebook", "reddit", "discord"],
       logoLight: "https://web3auth.io/images/web3authlog.png", //로고 사진
       logoDark: "https://web3auth.io/images/web3authlog.png",
       defaultLanguage: "en", // en, de, ja, ko, zh, es, fr, pt, nl

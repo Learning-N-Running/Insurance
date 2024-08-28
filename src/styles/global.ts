@@ -62,6 +62,23 @@ const GlobalStyle = createGlobalStyle`
     src: url('/static/Pretendard-Black.ttf') format('truetype');
   }
 
+  //Poppins
+  @font-face {
+    font-family: 'Poppins';
+    font-style: normal;
+    font-weight: 600;
+    src: url('/static/Poppins-SemiBold.ttf') format('truetype');
+  }
+
+  //SFPro
+  @font-face {
+    font-family: 'SFPro';
+    font-style: normal;
+    font-weight: 400;
+    src: url('/static/SF-Pro-Display-Regular.otf') format('opentype');
+  }
+
+
 `;
 
 export default GlobalStyle;

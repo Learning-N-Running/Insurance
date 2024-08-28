@@ -1,8 +1,8 @@
 const colors = {
-  primary: "#F8D49E",
+  primary: "#007aff",
+  primaryHover: "#0066cc",
+  primaryActive: "#3399ff",
   white: "#FFFFFF",
   black: "#000000",
-  primaryHover: "#D0893C",
-  button: "#DBD8CF",
 };
 export default colors;

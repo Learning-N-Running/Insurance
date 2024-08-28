@@ -24,7 +24,7 @@ const Layout = ({ children }: { children: ReactNode }) => {
   };
 
   const showHeader = () => {
-    if (pathname === "/not-pc-error") {
+    if (pathname === "/") {
       return false;
     }
     return true;
@@ -52,16 +52,15 @@ const Layout = ({ children }: { children: ReactNode }) => {
 
   return (
     <>
-      <BodyContainer>
-        {/* {showHeader() && <Header />} */}
-
-        {children}
-      </BodyContainer>
+      <EarthContainer>
+        {showHeader() && <Header />}
+        <BodyContainer hasHeader={showHeader()}>{children}</BodyContainer>
+      </EarthContainer>
     </>
   );
 };
 
-const BodyContainer = styled.div`
+const EarthContainer = styled.div`
   width: 768px;
   height: 100%;
 
@@ -73,14 +72,13 @@ const BodyContainer = styled.div`
   box-shadow: -10px 0 15px -10px rgba(0, 0, 0, 0.2),
     10px 0 15px -10px rgba(0, 0, 0, 0.2);
 
-  /* padding-top: 84px; */
-
   overflow: auto;
 `;
 
-const GoBack = styled(Image)`
-  margin: 48px 0px 38px 110px;
-  cursor: pointer;
+const BodyContainer = styled.div<{ hasHeader: boolean }>`
+  width: 100%;
+  height: 100%;
+  padding-top: ${({ hasHeader }) => (hasHeader ? "65px" : "0")};
 `;
 
 export default Layout;

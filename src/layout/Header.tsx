@@ -1,4 +1,3 @@
-import colors from "@/styles/color";
 import { usePathname, useRouter } from "next/navigation";
 import { styled } from "styled-components";
 import Image from "next/image";
@@ -10,6 +9,7 @@ import {
   getProfileImageState,
 } from "@/redux/slice/authSlice";
 import LoginButton from "@/components/common/LoginButton";
+import { Heading3 } from "@/styles/texts";
 
 const Header = () => {
   const router = useRouter();
@@ -18,42 +18,13 @@ const Header = () => {
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   return (
     <Container>
-      <Logo
-        src="/images/환생클럽_텍스트로고60x60.png"
-        alt="rebirth club logo"
-        width={100}
-        height={100}
-        onClick={() => router.push("/")}
+      <Heading3>Insurance premium planning</Heading3>
+      <Goback
+        src="/images/vb_goback.svg"
+        alt="go back"
+        width={24}
+        height={24}
       />
-      <div style={{ display: "flex", alignItems: "center" }}>
-        <WhiteButton
-          onClick={() => {
-            router.push(`/conversation`);
-          }}
-        >
-          채팅
-        </WhiteButton>
-        {isLoggedIn ? (
-          <>
-            <ProfileImage
-              src={profileImage!}
-              alt="header profile"
-              width={36}
-              height={36}
-              style={{ marginLeft: "28px", borderRadius: "50%" }}
-              onClick={() => {
-                setIsProfileModalOpen(!isProfileModalOpen);
-              }}
-            />
-            <ProfileModal
-              show={isProfileModalOpen}
-              setIsProfileModalOpen={setIsProfileModalOpen}
-            />
-          </>
-        ) : (
-          <LoginButton />
-        )}
-      </div>
     </Container>
   );
 };
@@ -61,53 +32,24 @@ const Header = () => {
 export default Header;
 
 const Container = styled.div`
-  width: 100vw;
-  height: 84px;
+  width: 100%;
+  height: 65px;
 
   position: fixed;
   z-index: 10;
 
   display: flex;
   align-items: center;
-  justify-content: space-between;
-
-  padding: 0 110px 0 110px;
+  justify-content: center;
 
   background-color: white;
-
-  border-bottom: 1px solid #e5e7eb;
 `;
 
-const Logo = styled(Image)`
-  width: 50px;
-  height: 50px;
-  cursor: pointer;
-`;
+const Goback = styled(Image)`
+  position: absolute;
 
-const WhiteButton = styled.button`
-  height: 48px;
-  padding: 0px;
+  left: 26px;
+  top: 21px;
 
-  font-weight: 500;
-  font-size: 24px;
-  font-family: Pretendard;
-
-  background-color: white;
-  color: black;
-
-  border: none;
-  border-radius: 10px;
-  cursor: pointer;
-
-  &:hover {
-    background-color: #f1f1f1;
-  }
-
-  padding: 0 10px;
-`;
-
-const ProfileImage = styled(Image)`
-  width: 36px;
-  height: 36px;
   cursor: pointer;
 `;
