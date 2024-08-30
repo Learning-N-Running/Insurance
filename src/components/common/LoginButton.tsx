@@ -28,24 +28,7 @@ const LoginButton = () => {
 
   useEffect(() => {
     async function initialize() {
-      await web3auth!.web3auth!.initModal({
-        modalConfig: {
-          // Disable Wallet Connect V2
-          [WALLET_ADAPTERS.WALLET_CONNECT_V2]: {
-            label: "wallet_connect",
-            showOnModal: false,
-          },
-          // // Disable Metamask
-          [WALLET_ADAPTERS.METAMASK]: {
-            label: "metamask",
-            showOnModal: false,
-          },
-          [WALLET_ADAPTERS.TORUS_EVM]: {
-            label: "torus",
-            showOnModal: false,
-          },
-        },
-      });
+      await web3auth!.web3auth!.initModal();
     }
     initialize();
   }, []);

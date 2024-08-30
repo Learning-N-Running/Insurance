@@ -73,12 +73,24 @@ const EarthContainer = styled.div`
     10px 0 15px -10px rgba(0, 0, 0, 0.2);
 
   overflow: auto;
+
+  /* &::after {
+    content: "";
+    display: block;
+    height: 105px; 
+  } */
 `;
 
 const BodyContainer = styled.div<{ hasHeader: boolean }>`
   width: 100%;
   height: 100%;
   padding-top: ${({ hasHeader }) => (hasHeader ? "65px" : "0")};
+
+  /* &::after {
+    content: "";
+    display: block;
+    padding-bottom: 105px;
+  } */
 `;
 
 export default Layout;

@@ -2,7 +2,6 @@ import { usePathname, useRouter } from "next/navigation";
 import { styled } from "styled-components";
 import Image from "next/image";
 import { useState } from "react";
-import ProfileModal from "@/components/modal/ProfileModal";
 import { useSelector, useDispatch } from "react-redux";
 import {
   getIsLoggedInState,
@@ -18,7 +17,7 @@ const Header = () => {
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   return (
     <Container>
-      <Heading3>Insurance premium planning</Heading3>
+      <Heading3>Insurance planning</Heading3>
       <Goback
         src="/images/vb_goback.svg"
         alt="go back"
