@@ -13,9 +13,11 @@ import Step_2_1 from "./Step_2_1";
 import Step_2_2 from "./Step_2_2";
 import Step_2_3 from "./Step_2_3";
 import Step_3 from "./Step_3";
+import { useRouter } from "next/navigation";
 
 export default function Signup() {
   const [step, setStep] = useState("1.1");
+  const router = useRouter();
 
   function goNext() {
     if (step === "1.1") {
@@ -37,8 +39,17 @@ export default function Signup() {
         {step === "2.2" && <Step_2_2 />}
         {step === "2.3" && <Step_2_3 />}
         {step === "3" && <Step_3 />}
-        {step !== "1.2" && (
+        {step !== "1.2" && step !== "3" && (
           <LongBlueButton onClick={() => goNext()}>Next</LongBlueButton>
+        )}
+        {step === "3" && (
+          <LongBlueButton
+            onClick={() => {
+              router.push("/home");
+            }}
+          >
+            I agree with all of it.
+          </LongBlueButton>
         )}
       </Container>
     </>

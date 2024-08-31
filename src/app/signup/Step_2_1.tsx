@@ -19,7 +19,7 @@ export default function Step_2_1() {
         what fits best for your needs.
       </Heading1>
       <Image
-        src="/images/vb_Individual_inactive.png"
+        src="/images/vb_Individual_inactive.svg"
         alt="individual"
         width={721}
         height={112}
@@ -27,7 +27,7 @@ export default function Step_2_1() {
       />
       {isClicked ? (
         <Image
-          src="/images/vb_Business_active.png"
+          src="/images/vb_Business_active.svg"
           alt="business"
           width={721}
           height={112}
@@ -36,7 +36,7 @@ export default function Step_2_1() {
         />
       ) : (
         <Image
-          src="/images/vb_Business_inactive.png"
+          src="/images/vb_Business_inactive.svg"
           alt="business"
           width={721}
           height={112}

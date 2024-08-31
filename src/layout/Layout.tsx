@@ -23,12 +23,12 @@ const Layout = ({ children }: { children: ReactNode }) => {
     return true;
   };
 
-  const showHeader = () => {
-    if (pathname === "/") {
-      return false;
-    }
-    return true;
-  };
+  // const showHeader = () => {
+  //   if (pathname === "/") {
+  //     return "false";
+  //   }
+  //   return true;
+  // };
 
   // useEffect //
   useEffect(() => {
@@ -53,8 +53,8 @@ const Layout = ({ children }: { children: ReactNode }) => {
   return (
     <>
       <EarthContainer>
-        {showHeader() && <Header />}
-        <BodyContainer hasHeader={showHeader()}>{children}</BodyContainer>
+        {pathname !== "/" && <Header />}
+        <BodyContainer controlHeader={pathname}>{children}</BodyContainer>
       </EarthContainer>
     </>
   );
@@ -73,24 +73,13 @@ const EarthContainer = styled.div`
     10px 0 15px -10px rgba(0, 0, 0, 0.2);
 
   overflow: auto;
-
-  /* &::after {
-    content: "";
-    display: block;
-    height: 105px; 
-  } */
 `;
 
-const BodyContainer = styled.div<{ hasHeader: boolean }>`
+const BodyContainer = styled.div<{ controlHeader: string }>`
   width: 100%;
   height: 100%;
-  padding-top: ${({ hasHeader }) => (hasHeader ? "65px" : "0")};
-
-  /* &::after {
-    content: "";
-    display: block;
-    padding-bottom: 105px;
-  } */
+  padding-top: ${({ controlHeader }) => controlHeader === "/signup" && "65px"};
+  padding-top: ${({ controlHeader }) => controlHeader === "/home" && "80px"};
 `;
 
 export default Layout;
