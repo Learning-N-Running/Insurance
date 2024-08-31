@@ -1,23 +1,31 @@
 "use client";
 
-import { Heading1 } from "@/styles/texts";
-import { useState } from "react";
-import { styled } from "styled-components";
-import Image from "next/image";
-import TextInput from "@/components/base/TextInput";
-import ToggleSwitch from "@/components/base/ToggleSwitch";
-import { LongBlueButton } from "@/components/base/LongBlueButton";
 import Step_1_1 from "./Step_1_1";
 import Step_1_2 from "./Step_1_2";
 import Step_2_1 from "./Step_2_1";
 import Step_2_2 from "./Step_2_2";
 import Step_2_3 from "./Step_2_3";
 import Step_3 from "./Step_3";
+import { useEffect, useState } from "react";
+import { styled } from "styled-components";
+import { LongBlueButton } from "@/components/base/LongBlueButton";
 import { useRouter } from "next/navigation";
+import { signContract } from "@/lib/sign/sign-contract";
+import { useGetSigner } from "@/lib/sign/useGetSigner";
+import { useWeb3Auth } from "@/contexts/Web3AuthContext";
 
 export default function Signup() {
   const [step, setStep] = useState("1.1");
+  const getSigner = useGetSigner();
   const router = useRouter();
+  const web3auth = useWeb3Auth();
+  const isLoggedIn = web3auth?.web3auth?.connected;
+
+  useEffect(() => {
+    if(!isLoggedIn) {
+      router.push("/");
+    }
+  }, [isLoggedIn]);
 
   function goNext() {
     if (step === "1.1") {
@@ -30,6 +38,17 @@ export default function Signup() {
       setStep("3");
     }
   }
+
+  const onSignContract = async () => {
+    const signer = await getSigner();
+    await signContract(
+      signer,
+      "0x3F233a18310c563270C3f8C6E9759b5f32FF4E08", // TODO: Insurer wallet address
+      "Premium"
+    );
+    router.push("/home");
+  };
+
   return (
     <>
       <Container>
@@ -43,11 +62,7 @@ export default function Signup() {
           <LongBlueButton onClick={() => goNext()}>Next</LongBlueButton>
         )}
         {step === "3" && (
-          <LongBlueButton
-            onClick={() => {
-              router.push("/home");
-            }}
-          >
+          <LongBlueButton onClick={onSignContract}>
             I agree with all of it.
           </LongBlueButton>
         )}

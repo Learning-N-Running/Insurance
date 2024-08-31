@@ -61,7 +61,11 @@ const authSlice = createSlice({
 
 export const { SET_USER_LOGIN, SET_USER_LOGOUT } = authSlice.actions;
 
+// DOES NOT WORK, do not use
 export const getIsLoggedInState = (state: RootState) => state.auth.isLoggedIn;
+
+
+
 export const getEmailState = (state: RootState) => state.auth.email;
 export const getNicknameState = (state: RootState) => state.auth.nickname;
 export const getAddressState = (state: RootState) => state.auth.address;
