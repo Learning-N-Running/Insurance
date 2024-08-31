@@ -1,19 +1,17 @@
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { styled } from "styled-components";
-import Image from "next/image";
 import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import {
-  getIsLoggedInState,
   getProfileImageState,
 } from "@/redux/slice/authSlice";
-import LoginButton from "@/components/common/LoginButton";
 import { Heading3 } from "@/styles/texts";
+import { useWeb3Auth } from "@/contexts/Web3AuthContext";
 
 const Header = () => {
   const router = useRouter();
   const pathname = usePathname();
-  const isLoggedIn = useSelector(getIsLoggedInState);
   const profileImage = useSelector(getProfileImageState);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   return (
@@ -27,15 +25,23 @@ const Header = () => {
 export default Header;
 
 function Header_Signup() {
+  const web3auth = useWeb3Auth();
+
+  const onClose = () => {
+    web3auth?.web3auth?.logout();
+  };
   return (
     <Container_Signup>
-      <Heading3>Insurance planning</Heading3>
       <Goback
         src="/images/vb_goback.svg"
         alt="go back"
         width={24}
         height={24}
       />
+      <Heading3>Insurance planning</Heading3>
+      <p onClick={onClose} style={{ fontSize: 19 }}>
+        &#x2715;
+      </p>
     </Container_Signup>
   );
 }
@@ -65,17 +71,16 @@ const Container_Signup = styled.div`
 
   position: fixed;
   z-index: 10;
+  padding: 0 16px;
 
   display: flex;
   align-items: center;
-  justify-content: center;
+  justify-content: space-between;
 
   background-color: white;
 `;
 
 const Goback = styled(Image)`
-  position: absolute;
-
   left: 26px;
   top: 21px;
 

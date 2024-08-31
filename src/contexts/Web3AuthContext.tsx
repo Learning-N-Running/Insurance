@@ -22,9 +22,9 @@ export const Web3AuthProvider = ({ children }: { children: any }) => {
     web3AuthNetwork: WEB3AUTH_NETWORK.SAPPHIRE_DEVNET, // import {WEB3AUTH_NETWORK} from "@web3auth/base";
     chainConfig: {
       chainNamespace: CHAIN_NAMESPACES.EIP155,
-      chainId: "0x13882",
-      rpcTarget: "https://rpc-amoy.polygon.technology/",
-      displayName: "Polygon Amoy",
+      chainId: "0x128",
+      rpcTarget: "https://testnet.hashio.io/api",
+      displayName: "Hedera Testnet",
     },
     uiConfig: {
       appName: "Vroombuddy",
