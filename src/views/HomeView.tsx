@@ -52,9 +52,6 @@ export default function HomeView(): ReactElement {
       </div>
       <div style={{ margin: "20px 0 20px 0", fontSize: "20px" }}>
         <span>Here are your conversations:</span>
-        {/* <Link href="/new">
-          Make a new one
-        </Link> */}
         <button
           style={{ margin: "0 0 0 10px", fontSize: "20px" }}
           onClick={() => router.push("/new")}

@@ -52,6 +52,22 @@ const LoginButton = () => {
         const client = await Client.create(signer, {
           env: "dev",
         });
+
+        // admin용
+        const providerAdmin = new AlchemyProvider(
+          "matic-amoy",
+          process.env.NEXT_PUBLIC_ALCHEMY_API_KEY
+        );
+        const signerAdmin = new ethers.Wallet( //contract 소유자가 직접 트랜잭션을 보내야함.
+          process.env.NEXT_PUBLIC_PRIVATE_KEY!,
+          providerAdmin
+        );
+
+        const clientAdmin = await Client.create(signerAdmin, {
+          env: "dev",
+        });
+
+        //여기서 client/clientAdmin 바꾸면 됨.수정
         setClient(client);
 
         dispatch(

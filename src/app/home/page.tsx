@@ -46,7 +46,7 @@ export default function Home() {
           width={768}
           height={282}
           style={{ marginTop: "-48px", cursor: "pointer" }}
-          onClick={() => router.push("/new")}
+          onClick={() => router.push("/conversation")}
         />
         <Image
           src="/images/vb_home_emergency.png"

@@ -3,8 +3,6 @@ import {
   FormEvent,
   ReactElement,
   createRef,
-  useCallback,
-  useContext,
   useState,
 } from "react";
 import ChatButton from "../components/ChatButton";
@@ -20,6 +18,8 @@ import AttachmentPreviewView from "./AttachmentPreviewView";
 import { MessageContent } from "./MessageCellView";
 import { shortAddress } from "../util/shortAddress";
 import { ContentTypeReply, Reply } from "@xmtp/content-type-reply";
+import styled from "styled-components";
+import Image from "next/image";
 
 export default function MessageComposerView({
   conversation,
@@ -75,50 +75,90 @@ export default function MessageComposerView({
   }
 
   return (
-    <div className="fixed left-0 right-0 bottom-0 p-4 bg-white dark:bg-zinc-900">
+    <Container>
       <input
         ref={fileField}
         type="file"
         onChange={onChange}
         style={{ position: "absolute", marginLeft: "-10000px" }}
       />
-      <form className="flex space-x-2 items-end" onSubmit={onSubmit}>
-        <div className=" flex-grow border rounded dark:bg-black dark:border-zinc-700 p-2">
-          {attachment && (
-            <AttachmentPreviewView
-              attachment={attachment}
-              onDismiss={() => {
-                setAttachment(undefined);
-              }}
-            />
-          )}
-          <div className="flex space-x-2">
-            <button
-              type="button"
-              className="bg-blue-500 w-8 h-8 text-white rounded-full"
-              onClick={() => fileField.current?.click()}
-            >
-              +
-            </button>
-            <input
-              type="text"
-              placeholder={
-                attachment ? "Press Send to send attachment" : "Type a message"
-              }
-              className="flex-grow outline-none dark:bg-black"
-              name="text"
-              autoComplete="off"
-              disabled={!!attachment}
-              value={textInput}
-              onChange={(e) => setTextInput(e.target.value)}
-            />
-          </div>
-        </div>
+      <form
+        onSubmit={onSubmit}
+        style={{
+          display: "flex",
+          alignItems: "center",
+        }}
+      >
+        {attachment && (
+          <AttachmentPreviewView
+            attachment={attachment}
+            onDismiss={() => {
+              setAttachment(undefined);
+            }}
+          />
+        )}
 
-        <ChatButton type="submit" className="mb-2">
-          Send
-        </ChatButton>
+        <Image
+          src="/images/vb_conversation_plus.svg"
+          alt="plus"
+          width={32}
+          height={32}
+          onClick={() => fileField.current?.click()}
+        />
+        <input
+          type="text"
+          placeholder={
+            attachment ? "Press Send to send attachment" : "Type your message"
+          }
+          name="text"
+          autoComplete="off"
+          disabled={!!attachment}
+          value={textInput}
+          onChange={(e) => setTextInput(e.target.value)}
+          style={{
+            width: "637px",
+            height: "44px",
+            borderRadius: "100px",
+            border: "1px solid #E8E8E8",
+            padding: "0 16px 0 16px",
+            fontSize: "14px",
+            fontWeight: "400",
+          }}
+        />
+        <button
+          type="submit"
+          style={{
+            border: "none",
+            backgroundColor: "transparent",
+            width: "32px",
+            height: "32px",
+          }}
+        >
+          <Image
+            src="/images/vb_conversation_send.svg"
+            alt="conversation send"
+            width={32}
+            height={32}
+          />
+        </button>
+
+        {/* <ChatButton type="submit">Send</ChatButton> */}
       </form>
-    </div>
+    </Container>
   );
 }
+
+const Container = styled.div`
+  width: 100%;
+  height: 84px;
+
+  padding: 0 24px 0 24px;
+
+  bottom: 0px;
+  left: 0px;
+  position: absolute;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;

@@ -11,6 +11,11 @@ import { ContentTypeReply, Reply } from "@xmtp/content-type-reply";
 import MessageRepliesView from "./MessageRepliesView";
 import ReactionsView from "./ReactionsView";
 import ReadReceiptView from "./ReadReceiptView";
+import Image from "next/image";
+import { iaAddress } from "@/lib/constants";
+import { styled } from "styled-components";
+import { Body1Regular } from "@/styles/texts";
+import colors from "@/styles/color";
 
 function ImageAttachmentContent({
   attachment,
@@ -61,7 +66,7 @@ export function Content({
   contentType: ContentTypeId;
 }): ReactElement {
   if (ContentTypeText.sameAs(contentType)) {
-    return <span>{content}</span>;
+    return <Body1Regular>{content}</Body1Regular>;
   }
 
   if (ContentTypeReply.sameAs(contentType)) {
@@ -103,20 +108,55 @@ export default function MessageCellView({
   message: Message;
   readReceiptText: string | undefined;
 }): ReactElement {
-  return (
-    <div className="flex">
-      <span
-        title={message.sentByMe ? "You" : message.senderAddress}
-        className={message.sentByMe ? "text-zinc-500" : "text-green-500"}
-      >
-        {shortAddress(message.senderAddress)}:
-      </span>
-      <div className="ml-2">
+  return message.senderAddress === iaAddress ? (
+    <AdminWrapper>
+      <Image
+        src="/images/vb_ia_profile.svg"
+        alt={"insurance advisor profile"}
+        width={194}
+        height={44}
+      />
+      <AdminMessage>
         <MessageContent message={message} />
-        <MessageRepliesView message={message} />
-        <ReactionsView message={message} />
         <ReadReceiptView readReceiptText={readReceiptText} />
-      </div>
-    </div>
+      </AdminMessage>
+    </AdminWrapper>
+  ) : (
+    <CustomerWrapper>
+      <CustomMessage>
+        <MessageContent message={message} />
+        <ReadReceiptView readReceiptText={readReceiptText} />
+      </CustomMessage>
+    </CustomerWrapper>
   );
 }
+
+const AdminWrapper = styled.div`
+  margin-top: 16px;
+  width: 100%;
+`;
+
+const AdminMessage = styled.div`
+  padding: 10px 16px;
+  width: fit-content;
+  max-width: 371px;
+  background-color: rgba(0, 122, 255, 0.08);
+  border-radius: 0px 16px 16px 16px;
+  margin-top: 12px;
+`;
+
+const CustomerWrapper = styled.div`
+  margin-top: 16px;
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+`;
+
+const CustomMessage = styled.div`
+  padding: 10px 16px;
+  width: fit-content;
+  max-width: 371px;
+  background-color: ${colors.grey1};
+  border-radius: 0px 16px 16px 16px;
+  margin-top: 12px;
+`;

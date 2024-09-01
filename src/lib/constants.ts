@@ -1,0 +1,1 @@
+export const iaAddress = "0x3F233a18310c563270C3f8C6E9759b5f32FF4E08";
