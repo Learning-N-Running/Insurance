@@ -20,6 +20,7 @@ const Header = () => {
     <>
       {pathname === "/signup" && <Header_Signup />}
       {pathname === "/home" && <Header_Home />}
+      {pathname.startsWith("/conversation") && <Header_Conversation />}
     </>
   );
 };
@@ -30,6 +31,20 @@ function Header_Signup() {
   return (
     <Container_Signup>
       <Heading3>Insurance planning</Heading3>
+      <Goback
+        src="/images/vb_goback.svg"
+        alt="go back"
+        width={24}
+        height={24}
+      />
+    </Container_Signup>
+  );
+}
+
+function Header_Conversation() {
+  return (
+    <Container_Signup>
+      <Heading3>Accident Report</Heading3>
       <Goback
         src="/images/vb_goback.svg"
         alt="go back"

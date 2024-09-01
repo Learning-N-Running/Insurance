@@ -11,24 +11,6 @@ const Layout = ({ children }: { children: ReactNode }) => {
   const pathname = usePathname();
   const router = useRouter();
   const [isClient, setIsClient] = useState(false);
-  const showGoBack = () => {
-    if (
-      pathname === "/" ||
-      pathname === "/my-collection" ||
-      pathname === "/conversation" ||
-      pathname === "/not-pc-error"
-    ) {
-      return false;
-    }
-    return true;
-  };
-
-  // const showHeader = () => {
-  //   if (pathname === "/") {
-  //     return "false";
-  //   }
-  //   return true;
-  // };
 
   // useEffect //
   useEffect(() => {
@@ -79,6 +61,8 @@ const BodyContainer = styled.div<{ controlHeader: string }>`
   width: 100%;
   height: 100%;
   padding-top: ${({ controlHeader }) => controlHeader === "/signup" && "65px"};
+  padding-top: ${({ controlHeader }) =>
+    controlHeader.startsWith("/conversation") && "65px"};
   padding-top: ${({ controlHeader }) => controlHeader === "/home" && "80px"};
 `;
 
