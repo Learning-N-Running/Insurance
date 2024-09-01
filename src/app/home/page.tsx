@@ -1,13 +1,12 @@
 "use client";
 
-import Image from "next/image";
-import { useRouter } from "next/navigation";
 import styled from "styled-components";
 import { useSelector } from "react-redux";
 import { getIsLoggedInState } from "@/redux/slice/authSlice";
-import LoginButton from "@/components/common/LoginButton";
-import { Body2Regular, Heading1, Heading2, Heading3 } from "@/styles/texts";
+import Image from "next/image";
+import { Heading1 } from "@/styles/texts";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
   const router = useRouter();

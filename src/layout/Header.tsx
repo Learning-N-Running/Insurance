@@ -1,19 +1,16 @@
+import Image from "next/image";
 import { usePathname, useRouter } from "next/navigation";
 import { styled } from "styled-components";
-import Image from "next/image";
 import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  getIsLoggedInState,
-  getProfileImageState,
-} from "@/redux/slice/authSlice";
-import LoginButton from "@/components/common/LoginButton";
+import { useSelector } from "react-redux";
+import { getProfileImageState } from "@/redux/slice/authSlice";
 import { Heading3 } from "@/styles/texts";
+import { useWeb3Auth } from "@/contexts/Web3AuthContext";
+import { isAbsolute } from "path";
 
 const Header = () => {
   const router = useRouter();
   const pathname = usePathname();
-  const isLoggedIn = useSelector(getIsLoggedInState);
   const profileImage = useSelector(getProfileImageState);
   const [isProfileModalOpen, setIsProfileModalOpen] = useState(false);
   return (
@@ -28,30 +25,39 @@ const Header = () => {
 export default Header;
 
 function Header_Signup() {
+  const web3auth = useWeb3Auth();
+
+  const onClose = () => {
+    web3auth?.web3auth?.logout();
+  };
   return (
     <Container_Signup>
-      <Heading3>Insurance planning</Heading3>
       <Goback
         src="/images/vb_goback.svg"
         alt="go back"
         width={24}
         height={24}
       />
+      <Heading3>Insurance planning</Heading3>
+      <p onClick={onClose} style={{ fontSize: 19 }}>
+        &#x2715;
+      </p>
     </Container_Signup>
   );
 }
 
 function Header_Conversation() {
   return (
-    <Container_Signup>
-      <Heading3>Accident Report</Heading3>
+    <Container_Conversation>
       <Goback
         src="/images/vb_goback.svg"
         alt="go back"
         width={24}
         height={24}
+        isAbsolute={true}
       />
-    </Container_Signup>
+      <Heading3>Accident Report</Heading3>
+    </Container_Conversation>
   );
 }
 
@@ -80,6 +86,22 @@ const Container_Signup = styled.div`
 
   position: fixed;
   z-index: 10;
+  padding: 0 16px;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  background-color: white;
+`;
+
+const Container_Conversation = styled.div`
+  width: 100%;
+  height: 65px;
+
+  position: fixed;
+  z-index: 10;
+  padding: 0 24px;
 
   display: flex;
   align-items: center;
@@ -88,13 +110,11 @@ const Container_Signup = styled.div`
   background-color: white;
 `;
 
-const Goback = styled(Image)`
-  position: absolute;
-
+const Goback = styled(Image)<{ isAbsolute?: boolean }>`
+  cursor: pointer;
+  position: ${(props) => props.isAbsolute == true && "absolute"};
   left: 26px;
   top: 21px;
-
-  cursor: pointer;
 `;
 
 const Container_Home = styled.div`

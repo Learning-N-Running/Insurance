@@ -141,8 +141,6 @@ export default function MessageComposerView({
             height={32}
           />
         </button>
-
-        {/* <ChatButton type="submit">Send</ChatButton> */}
       </form>
     </Container>
   );

@@ -1,17 +1,12 @@
-import { ReactElement, useEffect, useState } from "react";
+import { ReactElement, useEffect, useRef, useState } from "react";
 import { Conversation, Message } from "@/lib/model/db";
 import { useMessages } from "@/lib/hooks/useMessages";
 import MessageComposerView from "./MessageComposerView";
 import MessageCellView from "./MessageCellView";
-import Link from "next/link";
-import ChatHeader from "../components/ChatHeader";
-import { Cog6ToothIcon } from "@heroicons/react/24/solid";
 import { useLiveConversation } from "@/lib/hooks/useLiveConversation";
-import ConversationSettingsView from "./ConversationSettingsView";
 import { ContentTypeId } from "@xmtp/xmtp-js";
 import { ContentTypeReaction } from "@xmtp/content-type-reaction";
 import { useReadReceipts } from "@/lib/hooks/useReadReceipts";
-import Image from "next/image";
 import { styled } from "styled-components";
 
 const appearsInMessageList = (message: Message): boolean => {
@@ -32,16 +27,25 @@ export default function ConversationView({
 
   const showReadReceipt = useReadReceipts(conversation);
 
-  const [isShowingSettings, setIsShowingSettings] = useState(false);
+  const scrollRef = useRef<HTMLDivElement>(null);
+
+  const handleScroll = () => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollBy({ top: 80, behavior: "smooth" });
+    }
+  };
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      window.scrollTo({ top: 100000, behavior: "smooth" });
+    if (scrollRef.current) {
+      scrollRef.current.scrollTo({
+        top: scrollRef.current.scrollHeight,
+        behavior: "smooth",
+      });
     }
   }, [messages?.length]);
 
   return (
-    <Container>
+    <Container ref={scrollRef}>
       <div>
         {messages?.length === 0 && <p>No messages yet.</p>}
         {messages ? (
@@ -62,6 +66,7 @@ export default function ConversationView({
           <span>Could not load messages</span>
         )}
       </div>
+      <button onClick={handleScroll}>임시 버튼</button>
       <MessageComposerView conversation={conversation} />
     </Container>
   );
@@ -71,4 +76,5 @@ const Container = styled.div`
   width: 100%;
   padding: 17px 24px 80px 24px;
   position: relative;
+  overflow-y: auto;
 `;
