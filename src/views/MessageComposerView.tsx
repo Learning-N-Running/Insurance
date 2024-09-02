@@ -89,14 +89,14 @@ export default function MessageComposerView({
           alignItems: "center",
         }}
       >
-        {attachment && (
+        {/* {attachment && (
           <AttachmentPreviewView
             attachment={attachment}
             onDismiss={() => {
               setAttachment(undefined);
             }}
           />
-        )}
+        )} */}
 
         <Image
           src="/images/vb_conversation_plus.svg"

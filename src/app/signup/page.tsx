@@ -80,7 +80,7 @@ export default function Signup() {
         <Modal onClose={onCloseModal} isOpen={isModalOpen}>
           <ModalContainer>
             <img width={136} src="/images/vb_you_covered.png" />
-            <h1>You've Covered!</h1>
+            <h1>{"You've Covered!"}</h1>
             <h3>Start your safe journey now.</h3>
             <LongBlueButton onClick={onCloseModal}>
               Go to Homepage

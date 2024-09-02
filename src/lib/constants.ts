@@ -1,1 +1,1 @@
-export const iaAddress = "0x3F233a18310c563270C3f8C6E9759b5f32FF4E08";
+export const iaAddress = "0x8bEBb95f8B9808198eAaA79eA92e35E854B60F87";

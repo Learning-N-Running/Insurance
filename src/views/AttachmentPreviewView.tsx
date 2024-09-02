@@ -1,5 +1,6 @@
 import { ReactElement } from "react";
 import { Attachment } from "@xmtp/content-type-remote-attachment";
+import { styled } from "styled-components";
 
 export default function AttachmentPreviewView({
   attachment,

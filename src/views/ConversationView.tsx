@@ -66,7 +66,6 @@ export default function ConversationView({
           <span>Could not load messages</span>
         )}
       </div>
-      <button onClick={handleScroll}>임시 버튼</button>
       <MessageComposerView conversation={conversation} />
     </Container>
   );
