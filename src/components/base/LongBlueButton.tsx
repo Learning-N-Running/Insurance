@@ -2,7 +2,8 @@ import colors from "@/styles/color";
 import { styled } from "styled-components";
 
 export const LongBlueButton = styled.button`
-  width: 720px;
+  /* width: 720px; */
+  width: 100%;
   height: 64px;
 
   background-color: ${colors.primary};
