@@ -12,7 +12,7 @@ export const contracts = {
     Vroombuddy: "0x71DBC289F9840B9b83Be8E268652dc1C406C9971",
     config: {
       chainNamespace: CHAIN_NAMESPACES.EIP155,
-      chainId: "0x128",
+      chainId: "0x7a69",
       rpcTarget: "http://127.0.0.1:8545/",
       displayName: "Hedera Testnet",
       explorer: "https://hashscan.io/testnet/",
