@@ -14,7 +14,7 @@ export const LongBlueButton = styled.button`
   font-family: Pretendard;
 
   border: none;
-  border-radius: 100px;
+  border-radius: 40px;
   cursor: pointer;
 
   display: flex;

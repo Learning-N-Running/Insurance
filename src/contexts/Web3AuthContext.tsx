@@ -7,6 +7,7 @@ import {
   WEB3AUTH_NETWORK,
 } from "@web3auth/base";
 import { Web3Auth, Web3AuthOptions } from "@web3auth/modal";
+import { contracts } from "@/lib/constants";
 
 type Web3AuthContextType = {
   web3auth: Web3Auth | null;
@@ -20,12 +21,7 @@ export const Web3AuthProvider = ({ children }: { children: any }) => {
   const Web3AuthOptions: Web3AuthOptions = {
     clientId: process.env.NEXT_PUBLIC_WEB3_AUTH_CLIENT_ID!, // Get your Client ID from the Web3Auth Dashboard
     web3AuthNetwork: WEB3AUTH_NETWORK.SAPPHIRE_DEVNET, // import {WEB3AUTH_NETWORK} from "@web3auth/base";
-    chainConfig: {
-      chainNamespace: CHAIN_NAMESPACES.EIP155,
-      chainId: "0x128",
-      rpcTarget: "https://testnet.hashio.io/api",
-      displayName: "Hedera Testnet",
-    },
+    chainConfig: contracts.config,
     uiConfig: {
       appName: "Vroombuddy",
       mode: "auto", // light, dark or auto

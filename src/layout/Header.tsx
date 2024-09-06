@@ -25,10 +25,10 @@ const Header = () => {
 export default Header;
 
 function Header_Signup() {
-  const web3auth = useWeb3Auth();
+  const router = useRouter();
 
   const onClose = () => {
-    web3auth?.web3auth?.logout();
+    router.push("/home");
   };
   return (
     <Container_Signup>
@@ -39,7 +39,7 @@ function Header_Signup() {
         height={24}
       />
       <Heading3>Insurance planning</Heading3>
-      <p onClick={onClose} style={{ fontSize: 19 }}>
+      <p onClick={onClose} className="text-xl">
         &#x2715;
       </p>
     </Container_Signup>

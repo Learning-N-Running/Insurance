@@ -51,8 +51,8 @@ const EarthContainer = styled.div`
   transform: translateX(-50%);
 
   background-color: white;
-  box-shadow: -10px 0 15px -10px rgba(0, 0, 0, 0.2),
-    10px 0 15px -10px rgba(0, 0, 0, 0.2);
+  box-shadow: -10px 0 15px -10px rgba(0, 0, 0, 0.04),
+    10px 0 15px -10px rgba(0, 0, 0, 0.04);
 
   overflow: auto;
 `;
