@@ -16,7 +16,7 @@ export const ETHSignView = (props: { isSigned: boolean }) => {
       <button
         onClick={() => {
           window.open(
-            "https://app.ethsign.xyz/contract/ES-V-CTRqPeT-_e6TzHfKmuR0_",
+            "https://app.ethsign.xyz/contract/ES-V-lq24fz78Mft5Hq_g6ayzf",
             "_blank"
           );
         }}
