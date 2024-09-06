@@ -10,13 +10,14 @@ export default function HomeBeforeLogin() {
     <>
       <Container>
         <Image
-          src="/images/vb_logo_temp.svg"
+          src="/images/vb_logo.png"
           width={112}
           height={112}
           alt="logo"
+          className="mb-4"
         />
         <Name>Vroombuddy</Name>
-        <Body2Regular style={{ margin: "8px 0 96px 0" }}>
+        <Body2Regular className="mt-2 mb-10">
           Welcome to Vroombuddy! Enjoy safe and affordable insurance.
         </Body2Regular>
         <LoginButton />

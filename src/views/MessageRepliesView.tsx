@@ -2,7 +2,7 @@ import { ReactElement, useState } from "react";
 import { Message } from "@/lib/model/db";
 import { useReplies } from "@/lib/hooks/useReplies";
 import ReplyComposer from "./ReplyComposer";
-import { MessageContent } from "./MessageCellView";
+import { MessageContent } from "./message-view";
 import { shortAddress } from "../util/shortAddress";
 
 export default function MessageRepliesView({

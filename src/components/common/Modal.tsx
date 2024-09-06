@@ -41,10 +41,6 @@ const Title = styled.p`
   font-weight: 500;
 `;
 
-const CloseButton = styled.p`
-  font-size: 1.125rem;
-  cursor: pointer;
-`;
 
 export default function Modal({
   isOpen,
@@ -64,7 +60,7 @@ export default function Modal({
         {!noHeader && (
           <Header>
             <Title>{title}</Title>
-            <CloseButton onClick={onClose}>&#x2715;</CloseButton>
+            <div className="text-xl py-2.5" onClick={onClose}>&#x2715;</div>
           </Header>
         )}
         {children}

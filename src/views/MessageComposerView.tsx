@@ -5,7 +5,6 @@ import {
   createRef,
   useState,
 } from "react";
-import ChatButton from "../components/ChatButton";
 import { useClient } from "@/lib/hooks/useClient";
 import { Conversation } from "@/lib/model/db";
 import { sendMessage } from "@/lib/model/messages";
@@ -14,12 +13,11 @@ import {
   Attachment,
   ContentTypeAttachment,
 } from "@xmtp/content-type-remote-attachment";
-import AttachmentPreviewView from "./AttachmentPreviewView";
-import { MessageContent } from "./MessageCellView";
-import { shortAddress } from "../util/shortAddress";
-import { ContentTypeReply, Reply } from "@xmtp/content-type-reply";
-import styled from "styled-components";
 import Image from "next/image";
+import { allowClaim } from "@/lib/contracts/allowClaim";
+import { useGetSigner } from "@/lib/sign/useGetSigner";
+import { ADMIN_ADDRESS } from "@/lib/constants";
+import { CLAIM_COMMAND } from "./message-view/claim.view";
 
 export default function MessageComposerView({
   conversation,
@@ -32,28 +30,37 @@ export default function MessageComposerView({
 
   const fileField = createRef<HTMLInputElement>();
   const client = useClient()!;
+  const getSigner = useGetSigner();
 
-  function onSubmit(e: FormEvent) {
+  async function onSubmit(e: FormEvent) {
     e.preventDefault();
 
-    (async () => {
-      setLoading(true);
+    setLoading(true);
 
-      // check for input
-      if (textInput || attachment) {
-        const finalContent = textInput || attachment;
-        const finalContentType = textInput
-          ? ContentTypeText
-          : ContentTypeAttachment;
-        // send regular message
-        await sendMessage(client, conversation, finalContent, finalContentType);
+    if (client.address === ADMIN_ADDRESS && textInput === CLAIM_COMMAND) {
+      // sign contract
+      try {
+        await allowClaim(await getSigner());
+      } catch (e) {
+        console.error(e);
+        return;
       }
+    }
 
-      // clear inputs
-      setAttachment(undefined);
-      setTextInput("");
-      setLoading(false);
-    })();
+    // check for input
+    if (textInput || attachment) {
+      const finalContent = textInput || attachment;
+      const finalContentType = textInput
+        ? ContentTypeText
+        : ContentTypeAttachment;
+      // send regular message
+      await sendMessage(client, conversation, finalContent, finalContentType);
+    }
+
+    // clear inputs
+    setAttachment(undefined);
+    setTextInput("");
+    setLoading(false);
   }
 
   async function onChange(e: ChangeEvent<HTMLInputElement>) {
@@ -75,20 +82,14 @@ export default function MessageComposerView({
   }
 
   return (
-    <Container>
+    <div className="bg-white px-4 pt-6 pb-8">
       <input
         ref={fileField}
         type="file"
         onChange={onChange}
         style={{ position: "absolute", marginLeft: "-10000px" }}
       />
-      <form
-        onSubmit={onSubmit}
-        style={{
-          display: "flex",
-          alignItems: "center",
-        }}
-      >
+      <form onSubmit={onSubmit} className="flex-1 flex items-center gap-3">
         {/* {attachment && (
           <AttachmentPreviewView
             attachment={attachment}
@@ -115,25 +116,9 @@ export default function MessageComposerView({
           disabled={!!attachment}
           value={textInput}
           onChange={(e) => setTextInput(e.target.value)}
-          style={{
-            width: "637px",
-            height: "44px",
-            borderRadius: "100px",
-            border: "1px solid #E8E8E8",
-            padding: "0 16px 0 16px",
-            fontSize: "14px",
-            fontWeight: "400",
-          }}
+          className="h-11 rounded-full border border-[#E8E8E8] px-4 flex-1"
         />
-        <button
-          type="submit"
-          style={{
-            border: "none",
-            backgroundColor: "transparent",
-            width: "32px",
-            height: "32px",
-          }}
-        >
+        <button type="submit" className="w-8 h-8">
           <Image
             src="/images/vb_conversation_send.svg"
             alt="conversation send"
@@ -142,21 +127,6 @@ export default function MessageComposerView({
           />
         </button>
       </form>
-    </Container>
+    </div>
   );
 }
-
-const Container = styled.div`
-  width: 100%;
-  height: 84px;
-
-  padding: 0 24px 0 24px;
-
-  bottom: 0px;
-  left: 0px;
-  position: absolute;
-
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;

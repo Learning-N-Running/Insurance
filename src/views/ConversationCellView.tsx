@@ -1,8 +1,7 @@
 import { ReactElement } from "react";
 import { Conversation, Message } from "@/lib/model/db";
 import { shortAddress } from "../util/shortAddress";
-import ReactTimeAgo from "react-time-ago";
-import { MessageContent } from "./MessageCellView";
+import { MessageContent } from "./message-view/Contents";
 
 export default function ConversationCellView({
   conversation,
