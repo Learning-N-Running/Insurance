@@ -38,6 +38,7 @@ export default function MessageComposerView({
     setLoading(true);
 
     if (client.address === ADMIN_ADDRESS && textInput === CLAIM_COMMAND) {
+      console.log("Claim command detected");
       // sign contract
       try {
         await allowClaim(await getSigner());

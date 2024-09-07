@@ -43,7 +43,8 @@ export const ClaimView = () => {
         <AdminMsg>
           <p>Claim payment transaction submitted.</p>
           <a
-            href={`${contracts.config.explorer}tx/${txHash}`}
+            // href={`${contracts.config.explorer}tx/${txHash}`}
+            href={`${contracts.config.explorer}tx/0xed191afc2903f85f6274510b07d5ca68d9703c6a8a5c61a75cb1b7bf3a9f5c2a`}
             target="_blank"
             rel="noreferrer"
             className="text-blue-500"

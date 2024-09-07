@@ -52,11 +52,6 @@ export default function Signup() {
   const onSignContract = async () => {
     const signer = await getSigner();
     await joinInsurance(signer);
-    // await signContract(
-    //   signer,
-    //   "0x3F233a18310c563270C3f8C6E9759b5f32FF4E08", // TODO: Insurer wallet address
-    //   "Premium"
-    // );
     setIsTokenApprovalModalOpen(true);
   };
 

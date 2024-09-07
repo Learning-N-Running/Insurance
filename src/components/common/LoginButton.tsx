@@ -35,19 +35,6 @@ const LoginButton = () => {
       persistConversations: true,
     });
 
-    // admin용
-    const providerAdmin = new AlchemyProvider(
-      "matic-amoy",
-      process.env.NEXT_PUBLIC_ALCHEMY_API_KEY
-    );
-    const signerAdmin = new ethers.Wallet( //contract 소유자가 직접 트랜잭션을 보내야함.
-      process.env.NEXT_PUBLIC_PRIVATE_KEY!,
-      providerAdmin
-    );
-
-    const clientAdmin = await Client.create(signerAdmin, {
-      env: "dev",
-    });
 
     // 여기서 client/cliendAdmin 바꾸면 됨
     setClient(client);

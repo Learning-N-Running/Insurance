@@ -6,8 +6,6 @@ import { useMessages } from "@/lib/hooks/useMessages";
 import { ContentTypeId } from "@xmtp/xmtp-js";
 import { ContentTypeReaction } from "@xmtp/content-type-reaction";
 import { useReadReceipts } from "@/lib/hooks/useReadReceipts";
-import { ADMIN_ADDRESS } from "@/lib/constants";
-import { CLAIM_COMMAND } from "./message-view/claim.view";
 
 const appearsInMessageList = (message: Message): boolean => {
   return !ContentTypeReaction.sameAs(message.contentType as ContentTypeId);
@@ -35,12 +33,6 @@ export default function ConversationView({
     }
   }, [messages?.length]);
 
-  const isSigned = Boolean(
-    messages?.find(
-      (m) => m.senderAddress === ADMIN_ADDRESS && m.content === CLAIM_COMMAND
-    )
-  );
-
   return (
     <div className="flex flex-col h-[calc(100vh-65px)]">
       <div className="flex-1 overflow-scroll py-4 px-6 " ref={scrollRef}>
@@ -54,7 +46,6 @@ export default function ConversationView({
                   key={message.id}
                   message={message}
                   readReceiptText={showRead ? "Read" : undefined}
-                  isSigned={isSigned}
                 />
               );
             }

@@ -1,7 +1,8 @@
 import { CHAIN_NAMESPACES } from "@web3auth/base";
 
 export const ADMIN_ADDRESS = "0x8bEBb95f8B9808198eAaA79eA92e35E854B60F87";
-export const CLIENT_ADDRESS = "0x3F233a18310c563270C3f8C6E9759b5f32FF4E08";
+// export const CLIENT_ADDRESS = "0x3F233a18310c563270C3f8C6E9759b5f32FF4E08";
+export const CLIENT_ADDRESS = "0x01b62237c2b66c7332600Bf92ad98e3310290426";
 
 export const MODE: "local" | "hedera" = "local";
 // export const MODE: "local" | "hedera" = "hedera";

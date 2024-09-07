@@ -7,8 +7,7 @@ export const allowClaim = async (signer: Signer) => {
     ["function allowClaim(address user, uint256 amount) external"],
     signer
   );
-
-  return Vroombuddy.allowClaim(CLIENT_ADDRESS, parseUnits("200", 6)).then(
-    (tx: any) => tx.wait()
-  );
+  const tx = await Vroombuddy.allowClaim(CLIENT_ADDRESS, parseUnits("200", 6));
+  const res = await tx.wait();
+  return res;
 };
